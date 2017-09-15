@@ -3,7 +3,6 @@ package by.orion.test;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -42,11 +41,16 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 ViewGroup viewGroup = findViewById(R.id.gridlayout_main);
+                if (viewGroup == null) {
+                    return;
+                }
+
+                Context context = MainActivity.this;
                 for (String imageUrl : images) {
-                    ImageView imageView = newImageView(MainActivity.this);
+                    ImageView imageView = newImageView(context);
                     viewGroup.addView(imageView);
 
-                    Glide.with(MainActivity.this)
+                    Glide.with(context)
                             .load(imageUrl)
                             .into(imageView);
                 }
@@ -59,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @ActionBar.NavigationMode
+    @NonNull
     private static ImageView newImageView(@NonNull Context context) {
         ImageView imageView = new ImageView(context);
         imageView.setAdjustViewBounds(true);
